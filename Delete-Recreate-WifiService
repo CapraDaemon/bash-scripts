@@ -1,0 +1,17 @@
+# Get the Wi-Fi service name
+wifi_service=$(networksetup -listallnetworkservices | grep -i "wi-fi")
+
+# Delete the Wi-Fi service
+sudo networksetup -deletepppoeservice "Wi-Fi"
+
+# Add the Wi-Fi service
+sudo networksetup -createnetworkservice "Wi-Fi" en0
+
+# Set the Wi-Fi service as active
+networksetup -setnetworkserviceenabled Wi-Fi on
+
+# Restart the Wi-Fi service
+networksetup -setairportpower "$wifi_service" off
+networksetup -setairportpower "$wifi_service" on
+
+echo "Wi-Fi service has been deleted and recreated."
